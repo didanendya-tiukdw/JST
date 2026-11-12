@@ -11,30 +11,38 @@ Panduan ini mendokumentasikan arah visual dan aturan antarmuka untuk SOM Lab, mo
 - **Karakter:** akademik, ramah, presisi, dan tidak terasa seperti dasbor bisnis.
 - **Prioritas:** pemahaman materi dan interpretasi yang benar lebih penting daripada dekorasi. Hindari ornamen yang bersaing dengan data.
 
-## 2. Palet warna
+## 2. Tema dan palet warna
 
-Gunakan warna melalui token berikut. Palet ini diambil dari identitas visual antarmuka saat ini.
+SOM Lab menyediakan dropdown **Tema** di header halaman dengan pilihan **Terang** dan **Gelap**. Pengguna dapat mengubah pilihan kapan saja; perubahan langsung diterapkan ke seluruh permukaan, kontrol, dan visualisasi. Sebelum pengguna memilih, tema awal mengikuti preferensi sistem (`prefers-color-scheme`). Setelah dipilih, pilihan pengguna menggantikan preferensi sistem dan disimpan di browser agar tetap berlaku pada kunjungan berikutnya. Gunakan elemen `select` native agar dropdown dapat dioperasikan dengan keyboard dan teknologi bantu. Tetapkan `color-scheme` sesuai tema aktif agar kontrol native browser menyesuaikan tampilan. Jika penyimpanan pilihan gagal, tema tetap berubah untuk sesi saat ini dan tampilkan umpan balik.
 
-| Token | Nilai | Peran |
-|---|---|---|
-| `ink` | `#182645` | Warna utama teks, navigasi, tombol primer, dan panel kontras tinggi |
-| `muted` | `#53627A` | Teks sekunder, keterangan, label, dan sumbu |
-| `paper` | `#F5F7FB` | Latar utama halaman |
-| `line` | `#DCE3EF` | Garis pemisah dan batas komponen |
-| `teal` | `#087F83` | Aksen utama, tautan penting, progres, dan tindakan edukatif |
-| `pale` | `#E7F5F2` | Latar lembut untuk sorotan dan keadaan terpilih |
-| `indigo` | `#4A50B2` | Aksen sekunder, gunakan seperlunya |
-| `focus` | `#B16914` | Cincin fokus keyboard dan penanda fokus yang perlu terlihat |
-| `white` | `#FFFFFF` | Panel, kartu, dan kontrol di atas latar utama |
+Gunakan token semantik berikut, bukan menyalin warna literal ke komponen. Nilai tema gelap di bawah adalah sasaran untuk permukaan utama; pengecualian semantik seperti status dan visualisasi dapat memiliki warna khusus.
+
+| Token | Terang | Gelap | Peran |
+|---|---|---|---|
+| `ink` | `#182645` | `#E7EDF7` | Teks utama |
+| `muted` | `#53627A` | `#AAB8CD` | Teks sekunder, keterangan, label, dan sumbu |
+| `paper` | `#F5F7FB` | `#101827` | Latar halaman |
+| `line` | `#DCE3EF` | `#2C3A50` | Garis pemisah dan batas |
+| `teal` | `#087F83` | `#69D6C6` | Aksen utama, tautan penting, progres |
+| `pale` | `#E7F5F2` | `#173A3D` | Sorotan lembut dan keadaan terpilih |
+| `indigo` | `#4A50B2` | `#A5A9FF` | Aksen sekunder, gunakan seperlunya |
+| `focus` | `#B16914` | `#F4BD68` | Cincin fokus keyboard |
+| `surface` | `#FFFFFF` | `#182438` | Kartu, panel, dan kontrol |
+| `surface-raised` | `#F7F9FC` | `#202D42` | Header tabel, kontrol sekunder, permukaan bertingkat |
+
+Sidebar mempertahankan permukaan navy gelap pada kedua tema agar identitas navigasi stabil. Sesuaikan warna teks di dalamnya secara terpisah dan jaga kontrasnya.
 
 ### Aturan penggunaan warna
 
-- Jaga `ink` sebagai warna teks utama dan `muted` untuk informasi sekunder; jangan gunakan warna pucat untuk teks isi.
-- Gunakan `teal` secara konsisten sebagai aksen, bukan sebagai warna latar besar yang dominan.
-- Gunakan `pale` untuk membedakan keadaan aktif atau informasi terkait tanpa menghilangkan keterbacaan.
-- Gunakan warna status tambahan secara semantik: hijau untuk benar/selesai, merah lembut untuk jawaban keliru, dan amber untuk fokus atau peringatan.
+- Jaga `ink` sebagai warna teks utama dan `muted` untuk informasi sekunder; cek keterbacaan pada kedua tema.
+- Gunakan `teal` secara konsisten sebagai aksen. Pada tema gelap, gunakan teal terang untuk teks aksen agar kontrasnya cukup.
+- Gunakan `paper`, `surface`, dan `surface-raised` untuk membentuk hierarki latar; jangan memakai putih tetap sebagai latar komponen di tema gelap.
+- Gunakan `pale` untuk keadaan aktif dengan warna teks/batas yang juga disesuaikan untuk tema terkait.
+- Gunakan warna status tambahan secara semantik: hijau untuk benar/selesai, merah lembut untuk jawaban keliru, dan amber untuk fokus atau peringatan. Definisikan pasangan latar dan teks untuk kedua tema.
 - Jangan mengandalkan warna saja untuk menyampaikan makna. Sertakan label, ikon, bentuk, atau teks status.
-- Untuk peta nilai, pertahankan skala berurutan yang jelas dan sediakan legenda serta nilai teks. Pastikan teks di atas sel tetap terbaca pada nilai terang maupun gelap.
+- Untuk peta nilai, pertahankan skala berurutan yang jelas dan sediakan legenda serta nilai teks. Pastikan teks di atas sel tetap terbaca pada kedua tema.
+- Gunakan `prefers-color-scheme` hanya untuk menentukan tema awal sebelum ada pilihan tersimpan. Gunakan atribut tema pada root halaman untuk menerapkan pilihan pengguna secara eksplisit.
+- Simpan pilihan tema pengguna secara lokal; jika penyimpanan gagal, tema tetap berubah untuk sesi saat ini dan tampilkan umpan balik yang jelas.
 
 ## 3. Tipografi
 
@@ -60,6 +68,7 @@ Gunakan warna melalui token berikut. Palet ini diambil dari identitas visual ant
 ## 5. Komponen dan pola visual
 
 - **Navigasi bab:** latar `ink`, label sekunder berkontras cukup, keadaan aktif dibedakan oleh latar/batas, dan progres menggunakan teks serta indikator visual.
+- **Dropdown tema:** tempatkan kontrol berlabel “Tema” di header; sediakan opsi “Terang” dan “Gelap” dengan pilihan aktif yang selalu mencerminkan tema halaman.
 - **Hero:** judul editorial, ringkasan singkat, tindakan utama dan sekunder, serta visual peta yang mendukung materi.
 - **Kartu/panel:** latar putih, batas `line`, sudut membulat moderat (sekitar 8–13 px), dan padding lapang. Gunakan bayangan secara hemat.
 - **Tombol:** tinggi minimum sekitar 44 px, label tindakan spesifik, dan gaya konsisten untuk primer, sekunder, serta aksen.
@@ -74,6 +83,7 @@ Gunakan warna melalui token berikut. Palet ini diambil dari identitas visual ant
 
 - Setiap kontrol harus menjelaskan hasil atau konsekuensi tindakannya melalui label, petunjuk, atau umpan balik.
 - Beri keadaan interaktif yang berbeda dan konsisten: default, hover, fokus, terpilih, dinonaktifkan, berhasil, dan keliru.
+- Pilihan tema harus langsung mengubah keseluruhan halaman, termasuk peta dan kontrol; simpan pilihan secara lokal dan umumkan kegagalan penyimpanan dengan jelas.
 - Perubahan parameter simulasi harus tercermin pada nilai yang terlihat; bedakan hasil sebelum dan sesudah tindakan hitung.
 - Saat aktivitas selesai, berikan konfirmasi yang ringkas dan perbarui indikator progres secara transparan.
 - Simpan progres lokal hanya bila perilaku itu dijelaskan kepada pengguna; sediakan cara yang jelas untuk mengulang aktivitas bila sesuai.
@@ -84,8 +94,9 @@ Gunakan warna melalui token berikut. Palet ini diambil dari identitas visual ant
 
 - Gunakan elemen HTML semantik, urutan heading yang logis, nama label yang deskriptif, dan teks alternatif/deskripsi untuk visualisasi.
 - Semua tindakan harus dapat dilakukan dengan keyboard. Sediakan indikator `:focus-visible` yang jelas dan tidak tertutup.
-- Jaga kontras teks sesuai WCAG 2.1 AA sebagai sasaran (4,5:1 untuk teks normal; 3:1 untuk teks besar dan elemen non-teks penting).
+- Jaga kontras teks sesuai WCAG 2.1 AA sebagai sasaran pada **kedua** tema (4,5:1 untuk teks normal; 3:1 untuk teks besar dan elemen non-teks penting).
 - Beri nama aksesibel pada kontrol, tab, tombol peta, grafik, serta indikator progres; gunakan ARIA hanya jika semantik HTML belum cukup.
+- Beri label yang terhubung ke dropdown tema, pertahankan dukungan keyboard dari elemen `select`, dan tampilkan pesan status bila preferensi tema tidak dapat disimpan.
 - Umumkan hasil dinamis atau status simulasi melalui area live yang sesuai, tanpa membanjiri pembaca layar.
 - Ukuran target sentuh minimal sekitar 44 × 44 px bila memungkinkan.
 - Sediakan tautan lewati navigasi, dukung zoom, dan uji tampilan pada layar kecil.
@@ -112,6 +123,9 @@ Gunakan warna melalui token berikut. Palet ini diambil dari identitas visual ant
 ## 10. Checklist sebelum rilis
 
 - [ ] Palet, tipografi, jarak, dan gaya komponen konsisten dengan panduan ini.
+- [ ] Dropdown tema Terang/Gelap dapat digunakan dengan keyboard dan teknologi bantu serta menampilkan pilihan aktif.
+- [ ] Tema sistem dipakai sebagai nilai awal; pilihan eksplisit pengguna tersimpan dan tetap berlaku saat halaman dibuka lagi.
+- [ ] Latar, teks, batas, grafik, kontrol, dan status terbaca pada kedua tema.
 - [ ] Tata letak diuji pada desktop, tablet, dan ponsel; tidak ada overflow halaman.
 - [ ] Navigasi dan seluruh kontrol dapat digunakan dengan keyboard serta memiliki fokus yang terlihat.
 - [ ] Kontras, label aksesibel, status dinamis, dan deskripsi visualisasi sudah diperiksa.
